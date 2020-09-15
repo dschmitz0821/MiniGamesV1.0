@@ -16,7 +16,7 @@ public class Items {
             Material.STONE_SWORD,
             Material.IRON_SWORD,
             Material.DIAMOND_SWORD,
-            Material.NETHERITE_SWORD
+            //Material.NETHERITE_SWORD
     };
 
     public static final Material[] ARMOUR_ARRAY = new Material[]{
@@ -31,15 +31,15 @@ public class Items {
             Material.GOLDEN_LEGGINGS,
             Material.GOLDEN_BOOTS,
             // Diamond armour
-            Material.DIAMOND_HELMET,
-            Material.DIAMOND_CHESTPLATE,
-            Material.DIAMOND_LEGGINGS,
-            Material.DIAMOND_BOOTS,
+            //Material.DIAMOND_HELMET,
+            //Material.DIAMOND_CHESTPLATE,
+            //Material.DIAMOND_LEGGINGS,
+            //Material.DIAMOND_BOOTS,
             // Netherite
-            Material.NETHERITE_HELMET,
-            Material.NETHERITE_CHESTPLATE,
-            Material.NETHERITE_LEGGINGS,
-            Material.NETHERITE_BOOTS,
+            //Material.NETHERITE_HELMET,
+            //Material.NETHERITE_CHESTPLATE,
+            //Material.NETHERITE_LEGGINGS,
+            //Material.NETHERITE_BOOTS,
             // Shield
             Material.SHIELD
     };

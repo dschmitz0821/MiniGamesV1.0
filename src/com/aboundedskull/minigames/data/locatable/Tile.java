@@ -25,4 +25,24 @@ public class Tile {
     public void setY(int y) {
         this.y = y;
     }
+
+    public boolean setX(String x){
+        try {
+            this.x = Integer.parseInt(x);
+            return true;
+        } catch (NumberFormatException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean setY(String y){
+        try {
+            this.y = Integer.parseInt(y);
+            return true;
+        } catch (NumberFormatException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

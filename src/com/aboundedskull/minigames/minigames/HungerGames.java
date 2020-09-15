@@ -3,6 +3,7 @@ package com.aboundedskull.minigames.minigames;
 import com.aboundedskull.minigames.data.locatable.Coordinate;
 import com.aboundedskull.minigames.data.item.Items;
 import com.aboundedskull.minigames.data.locatable.Tile;
+import com.aboundedskull.minigames.data.minigame.MinigameData;
 import com.aboundedskull.minigames.utils.random.Random;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -18,6 +19,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class HungerGames implements Minigame {
 
+    // TODO: 9/15/2020 Set the actual hunger games world name.
     private static final String HUNGER_GAMES_WORLD = "Hunger games";
     private final Tile centerTile;
     private boolean started;
@@ -38,6 +40,7 @@ public class HungerGames implements Minigame {
         }
     };
 
+    // TODO: 9/15/2020 Add the chest coordinates to this arraylist.  
     private final List<Coordinate> chestCoordinates = new ArrayList<Coordinate>(){
         {
             add(new Coordinate(0,0,0));
@@ -64,7 +67,30 @@ public class HungerGames implements Minigame {
     }
 
     @Override
-    public void startMinigame() {
+    public boolean validateArguments(MinigameData data) {
+        String[] args = data.getData();
+        if (args.length == 1){
+            getCenterTile().setX(0);
+            getCenterTile().setY(0);
+            return true;
+        } else if (args.length == 3){
+            if (!getCenterTile().setX(args[1]) || !getCenterTile().setY(args[2])){
+                sendErrorMessage(data.getSender(), "Failed to set the x or y argument, continuing anyways.");
+            }
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void startMinigame(MinigameData data) {
+        // Validate that the hunger games world exists.
+        World world = Bukkit.getWorld(HUNGER_GAMES_WORLD);
+        if (world == null) {
+            sendErrorMessage(data.getSender(), "Could not find hunger games world name.");
+            return;
+        }
+
         // Hunger games start code
         started = true;
 
@@ -78,16 +104,17 @@ public class HungerGames implements Minigame {
         int max = coordinateList.size();
         int playerCount = 0;
 
+        // Store the hunger games world.
         Collections.shuffle(coordinateList);
         for (Player player : Bukkit.getOnlinePlayers()) {
-            if (playerCount < max){
+            if (playerCount < max) {
                 Coordinate currentCoordinate = coordinateList.get(playerCount++);
-                player.teleport(new Location(player.getWorld(), currentCoordinate.getX(), currentCoordinate.getY(), currentCoordinate.getZ()));
+                player.teleport(new Location(world, currentCoordinate.getX(), currentCoordinate.getY(), currentCoordinate.getZ()));
             }
         }
 
+        // Fill the chests with random items.
         loadChests();
-
     }
 
     private void loadChests() {
@@ -117,6 +144,7 @@ public class HungerGames implements Minigame {
         }
     }
 
+    // TODO: 9/15/2020 Add some kind of weighting for the randomization.
     private ItemStack getRandomItem() {
         Material material;
         int amount = 1;

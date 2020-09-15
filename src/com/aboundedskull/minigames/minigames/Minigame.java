@@ -1,6 +1,7 @@
 package com.aboundedskull.minigames.minigames;
 
 import com.aboundedskull.minigames.data.locatable.Tile;
+import com.aboundedskull.minigames.data.minigame.MinigameData;
 import com.aboundedskull.minigames.utils.handler.MessageHandler;
 import org.bukkit.ChatColor;
 
@@ -12,7 +13,9 @@ public interface Minigame extends MessageHandler {
 
     String getCommandName();
 
-    void startMinigame();
+    boolean validateArguments(MinigameData data);
+
+    void startMinigame(MinigameData data);
 
     void endMinigame();
 

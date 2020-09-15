@@ -18,6 +18,16 @@ public class Coordinate extends Tile {
         this.z = z;
     }
 
+    public boolean setZ(String z){
+        try {
+            this.z = Integer.parseInt(z);
+            return true;
+        } catch (NumberFormatException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     @Override
     public String toString() {
         return "Coordinate " + "(" + super.getX() + "," + super.getY() + "," + getZ() + ")";

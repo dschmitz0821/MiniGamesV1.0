@@ -1,6 +1,7 @@
 package com.aboundedskull.minigames.minigames;
 
 import com.aboundedskull.minigames.data.locatable.Tile;
+import com.aboundedskull.minigames.data.minigame.MinigameData;
 
 public class TheWalls implements Minigame {
 
@@ -27,7 +28,12 @@ public class TheWalls implements Minigame {
     }
 
     @Override
-    public void startMinigame() {
+    public boolean validateArguments(MinigameData data) {
+        return true;
+    }
+
+    @Override
+    public void startMinigame(MinigameData data) {
         started = true;
     }
 

@@ -17,7 +17,7 @@ public class MiniGamesEvents implements Listener {
         player.sendMessage(ChatColor.BLUE + "Welcome to the Server!");
     }
 
-    private static Timer bedTimer = new Timer();
+    private static final Timer bedTimer = new Timer();
 
     @EventHandler
     public static void onPlayerBedEnterEvent(PlayerBedEnterEvent event){

@@ -26,6 +26,5 @@ public class MiniGames extends JavaPlugin {
     @Override
     public void onDisable() {
         getServer().getConsoleSender().sendMessage(ChatColor.RED + "[Mini Games]: Plugin is disabled.");
-
     }
 }

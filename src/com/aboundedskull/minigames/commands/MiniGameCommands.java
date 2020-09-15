@@ -1,5 +1,6 @@
 package com.aboundedskull.minigames.commands;
 
+import com.aboundedskull.minigames.data.minigame.MinigameData;
 import com.aboundedskull.minigames.minigames.HungerGames;
 import com.aboundedskull.minigames.minigames.Minigame;
 import com.aboundedskull.minigames.minigames.TheWalls;
@@ -34,10 +35,8 @@ public class MiniGameCommands implements CommandExecutor, MessageHandler {
             Where the first command will default to 0,0
             Example of command is /start HG or /start HG 50 50
              */
-            if (args.length == 1 || args.length == 3){
+            if (args.length >= 1){
                 String minigameType = args[0];
-                int x = 0;
-                int y = 0;
                 boolean foundGame = false;
 
                 for (Minigame minigame : minigameEvents) {
@@ -47,29 +46,20 @@ public class MiniGameCommands implements CommandExecutor, MessageHandler {
 
                     foundGame = true;
 
-                    // Parsing optional x,y arguments.
-                    if (args.length == 3){
-                        try {
-                            x = Integer.parseInt(args[1]);
-                            y = Integer.parseInt(args[2]);
-                        } catch (NumberFormatException e){
-                            player.sendMessage("Failed to parse coordinate arguments, defaulting rest to 0.");
-                            e.printStackTrace();
-                        }
-                    }
-
                     // Hunger games type of event
                     if (minigameType.equalsIgnoreCase("HG")){
                         if (!minigame.isStarted()) {
-                            // Set the coordinates of center tile.
-                            minigame.getCenterTile().setX(x);
-                            minigame.getCenterTile().setY(y);
+                            // Create a new minigame data object.
+                            MinigameData data = new MinigameData(player, args);
 
-                            // Send starting message.
-                            minigame.sendStartingMessage();
+                            // Validate the arguments
+                            if (minigame.validateArguments(data)) {
+                                // Send starting message.
+                                minigame.sendStartingMessage();
 
-                            // Start the event
-                            minigame.startMinigame();
+                                // Start the event
+                                minigame.startMinigame(data);
+                            }
                         } else {
                             // Tell the player to stop the current hunger games event first.
                             sendErrorMessage(player, "Unable to start " + minigame.getName() + " event, stop current event first.");

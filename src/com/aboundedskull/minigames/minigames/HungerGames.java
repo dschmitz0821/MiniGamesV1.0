@@ -20,7 +20,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class HungerGames implements Minigame {
 
     // TODO: 9/15/2020 Set the actual hunger games world name.
-    private static final String HUNGER_GAMES_WORLD = "Hunger games";
+    private static final String HUNGER_GAMES_WORLD = "MiniGames";
     private final Tile centerTile;
     private boolean started;
     private final List<Coordinate> coordinateList = new ArrayList<Coordinate>(){
@@ -43,12 +43,15 @@ public class HungerGames implements Minigame {
     // TODO: 9/15/2020 Add the chest coordinates to this arraylist.  
     private final List<Coordinate> chestCoordinates = new ArrayList<Coordinate>(){
         {
-            add(new Coordinate(0,0,0));
+            add(new Coordinate(-55,74,3));
+            add(new Coordinate(-54,74,-2));
+            add(new Coordinate(-53,74,-3));
+            add(new Coordinate(-54,74,-4));
         }
     };
 
     public HungerGames() {
-        this.centerTile = new Tile(0,0);
+        this.centerTile = new Tile(-53,-2);
     }
 
     @Override
@@ -70,8 +73,8 @@ public class HungerGames implements Minigame {
     public boolean validateArguments(MinigameData data) {
         String[] args = data.getData();
         if (args.length == 1){
-            getCenterTile().setX(0);
-            getCenterTile().setY(0);
+            getCenterTile().setX(-53);
+            getCenterTile().setY(-2);
             return true;
         } else if (args.length == 3){
             if (!getCenterTile().setX(args[1]) || !getCenterTile().setY(args[2])){

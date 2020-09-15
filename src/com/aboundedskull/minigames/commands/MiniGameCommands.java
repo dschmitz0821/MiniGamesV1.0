@@ -3,7 +3,7 @@ package com.aboundedskull.minigames.commands;
 import com.aboundedskull.minigames.minigames.HungerGames;
 import com.aboundedskull.minigames.minigames.Minigame;
 import com.aboundedskull.minigames.minigames.TheWalls;
-import com.aboundedskull.minigames.utils.MessageHandler;
+import com.aboundedskull.minigames.utils.handler.MessageHandler;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

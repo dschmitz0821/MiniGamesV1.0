@@ -1,4 +1,4 @@
-package com.aboundedskull.minigames.data;
+package com.aboundedskull.minigames.data.locatable;
 
 public class Coordinate extends Tile {
 

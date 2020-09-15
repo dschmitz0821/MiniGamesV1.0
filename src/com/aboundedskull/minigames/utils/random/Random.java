@@ -1,4 +1,4 @@
-package com.aboundedskull.minigames.utils;
+package com.aboundedskull.minigames.utils.random;
 
 import java.util.Collection;
 

@@ -1,6 +1,6 @@
 package com.aboundedskull.minigames.minigames;
 
-import com.aboundedskull.minigames.data.Tile;
+import com.aboundedskull.minigames.data.locatable.Tile;
 
 public class TheWalls implements Minigame {
 

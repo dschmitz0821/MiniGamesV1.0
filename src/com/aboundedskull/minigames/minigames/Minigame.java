@@ -1,7 +1,7 @@
 package com.aboundedskull.minigames.minigames;
 
-import com.aboundedskull.minigames.data.Tile;
-import com.aboundedskull.minigames.utils.MessageHandler;
+import com.aboundedskull.minigames.data.locatable.Tile;
+import com.aboundedskull.minigames.utils.handler.MessageHandler;
 import org.bukkit.ChatColor;
 
 public interface Minigame extends MessageHandler {

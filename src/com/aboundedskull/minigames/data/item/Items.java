@@ -1,4 +1,4 @@
-package com.aboundedskull.minigames.data;
+package com.aboundedskull.minigames.data.item;
 
 import org.bukkit.Material;
 
@@ -8,14 +8,16 @@ public class Items {
                     Material.IRON_AXE,
                     Material.GOLDEN_AXE,
                     Material.STONE_AXE,
-                    Material.DIAMOND_AXE
+                    Material.DIAMOND_AXE,
+                    Material.NETHERITE_AXE
             };
 
     public static final Material[] SWORD_ARRAY = new Material[]{
             Material.GOLDEN_SWORD,
             Material.STONE_SWORD,
             Material.IRON_SWORD,
-            Material.DIAMOND_SWORD
+            Material.DIAMOND_SWORD,
+            Material.NETHERITE_SWORD
     };
 
     public static final Material[] ARMOUR_ARRAY = new Material[]{

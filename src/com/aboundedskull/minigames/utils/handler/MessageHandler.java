@@ -1,4 +1,4 @@
-package com.aboundedskull.minigames.utils;
+package com.aboundedskull.minigames.utils.handler;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

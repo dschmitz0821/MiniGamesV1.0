@@ -1,9 +1,9 @@
 package com.aboundedskull.minigames.minigames;
 
-import com.aboundedskull.minigames.data.Coordinate;
-import com.aboundedskull.minigames.data.Items;
-import com.aboundedskull.minigames.data.Tile;
-import com.aboundedskull.minigames.utils.Random;
+import com.aboundedskull.minigames.data.locatable.Coordinate;
+import com.aboundedskull.minigames.data.item.Items;
+import com.aboundedskull.minigames.data.locatable.Tile;
+import com.aboundedskull.minigames.utils.random.Random;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;

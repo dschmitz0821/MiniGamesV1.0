@@ -1,5 +1,6 @@
 package com.aboundedskull.minigames.events;
 
+import com.aboundedskull.minigames.utils.timer.Timer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -16,13 +17,12 @@ public class MiniGamesEvents implements Listener {
         player.sendMessage(ChatColor.BLUE + "Welcome to the Server!");
     }
 
-    private static long lastPlayerBedEnter = 0;
+    private static Timer bedTimer = new Timer();
 
     @EventHandler
     public static void onPlayerBedEnterEvent(PlayerBedEnterEvent event){
-        long currentTime = System.currentTimeMillis();
 
-        if (currentTime - lastPlayerBedEnter > 60_000) {
+        if (bedTimer.elapsed() > 60_000) {
             Player itself = event.getPlayer();
             for (Player player : Bukkit.getOnlinePlayers()) {
                 if (!player.equals(itself)) {
@@ -31,7 +31,7 @@ public class MiniGamesEvents implements Listener {
                     player.sendMessage(ChatColor.GREEN + "Tellin dem bitches to sleep!");
                 }
             }
-            lastPlayerBedEnter = currentTime;
+            bedTimer.reset();
         }
     }
 

@@ -63,7 +63,7 @@ public class MiniGameCommands implements CommandExecutor, MessageHandler {
                         } else {
                             // Tell the player to stop the current hunger games event first.
                             sendErrorMessage(player, "Unable to start " + minigame.getName() + " event, stop current event first.");
-                            sendErrorMessage(player, "Example: /stop " + minigame.getCommandName());
+                            sendErrorMessage(player, "Example: /end " + minigame.getCommandName());
                         }
                     }
                 }
@@ -76,7 +76,7 @@ public class MiniGameCommands implements CommandExecutor, MessageHandler {
                 sendErrorMessage(player, "Unable to start event, incorrect argument length.");
                 sendErrorMessage(player, "/start HG or /start HG 0 0");
             }
-        } else if (cmdName.equals("stop")){
+        } else if (cmdName.equals("end")){
             if (args.length == 1){
                 String minigameType = args[0];
                 boolean found = false;
@@ -101,7 +101,7 @@ public class MiniGameCommands implements CommandExecutor, MessageHandler {
                 }
             } else {
                 sendErrorMessage(player, "Incorrect command length.");
-                sendErrorMessage(player, "Example: /stop HG");
+                sendErrorMessage(player, "Example: /end HG");
             }
         }
         return true;

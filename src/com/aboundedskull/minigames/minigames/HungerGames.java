@@ -7,7 +7,9 @@ import com.aboundedskull.minigames.data.minigame.MinigameData;
 import com.aboundedskull.minigames.utils.random.Random;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
+import org.bukkit.block.ShulkerBox;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -21,41 +23,31 @@ public class HungerGames implements Minigame {
 
     // TODO: 9/15/2020 Set the actual hunger games world name.
     private static final String HUNGER_GAMES_WORLD = "MiniGames";
-    private final Tile centerTile;
+    private final Coordinate centerTile;
     private boolean started;
     private final List<Coordinate> coordinateList = new ArrayList<Coordinate>(){
         {
             add(new Coordinate(-64, 74, -3));
-            add(new Coordinate(-63, 74, -8));
-            add(new Coordinate(-59, 74, -12));
-            add(new Coordinate(-54, 74, -13));
-            add(new Coordinate(-49, 74, -12));
-            add(new Coordinate(-23, 74, -9));
+            add(new Coordinate(-63, 74, 2));
+            add(new Coordinate(-59, 74, 6));
+            add(new Coordinate(-54, 74, 7));
+            add(new Coordinate(-49, 74, 6));
+            add(new Coordinate(-45, 74, 2));
             add(new Coordinate(-44, 74, -3));
-            add(new Coordinate(-45, 74, 3));
-            add(new Coordinate(-49, 74, 7));
-            add(new Coordinate(-54, 74, 8));
-            add(new Coordinate(-59, 74, 7));
-            add(new Coordinate(-63, 74, 3));
-        }
-    };
-
-    // TODO: 9/15/2020 Add the chest coordinates to this arraylist.  
-    private final List<Coordinate> chestCoordinates = new ArrayList<Coordinate>(){
-        {
-            add(new Coordinate(-55,74,3));
-            add(new Coordinate(-54,74,-2));
-            add(new Coordinate(-53,74,-3));
-            add(new Coordinate(-54,74,-4));
+            add(new Coordinate(-45, 74, -8));
+            add(new Coordinate(-49, 74, -12));
+            add(new Coordinate(-54, 74, -13));
+            add(new Coordinate(-59, 74, -12));
+            add(new Coordinate(-63, 74, -8));
         }
     };
 
     public HungerGames() {
-        this.centerTile = new Tile(-53,-2);
+        this.centerTile = new Coordinate(-53,74,-3);
     }
 
     @Override
-    public Tile getCenterTile() {
+    public Coordinate getCenterTile() {
         return centerTile;
     }
 
@@ -74,7 +66,8 @@ public class HungerGames implements Minigame {
         String[] args = data.getData();
         if (args.length == 1){
             getCenterTile().setX(-53);
-            getCenterTile().setY(-2);
+            getCenterTile().setY(74);
+            getCenterTile().setZ(-3);
             return true;
         } else if (args.length == 3){
             if (!getCenterTile().setX(args[1]) || !getCenterTile().setY(args[2])){
@@ -100,7 +93,7 @@ public class HungerGames implements Minigame {
         // Set the initial world bounds
         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "worldborder center " + getCenterTile().getX() + " " + getCenterTile().getY());
         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "worldborder set 500 0");
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "spreadplayers 0 0 50 200 false @a");
+        // Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "spreadplayers 0 0 50 200 false @a");
         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "worldborder set 50 900");
 
         // Teleport all the players.
@@ -112,7 +105,8 @@ public class HungerGames implements Minigame {
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (playerCount < max) {
                 Coordinate currentCoordinate = coordinateList.get(playerCount++);
-                player.teleport(new Location(world, currentCoordinate.getX(), currentCoordinate.getY(), currentCoordinate.getZ()));
+                System.out.println("Teleporting to: " + currentCoordinate.toString());
+                player.teleport(new Location(world, currentCoordinate.getX() + 0.5, currentCoordinate.getY(), currentCoordinate.getZ() + 0.5));
             }
         }
 
@@ -122,28 +116,49 @@ public class HungerGames implements Minigame {
 
     private void loadChests() {
         World world = Bukkit.getWorld(HUNGER_GAMES_WORLD);
-        for (Coordinate coordinate : chestCoordinates){
-            Block block = new Location(world, coordinate.getX(),  coordinate.getY(), coordinate.getZ()).getBlock();
 
-            if (block instanceof Chest){
+        List<Coordinate> nearbyCoordinates = new ArrayList<>();
+
+        for (int i = -10; i < 10; i++) {
+            for (int j = -10; j < 10; j++) {
+                for (int k = -10; k < 10; k++) {
+                    nearbyCoordinates.add(new Coordinate(centerTile.getX() + i, centerTile.getY() + j, centerTile.getZ() + k));
+                }
+            }
+        }
+
+        for (Coordinate coordinate : nearbyCoordinates){
+            BlockState block = new Location(world, coordinate.getX(),  coordinate.getY(), coordinate.getZ()).getBlock().getState();
+
+            if (block instanceof ShulkerBox){
+                ShulkerBox shulkerBox = (ShulkerBox) block;
+
+                Inventory inventory = shulkerBox.getInventory();
+
+                loadInventoryWithItems(inventory);
+            } else if (block instanceof Chest){
                 Chest chest = (Chest) block;
 
-                Inventory inventory = chest.getBlockInventory();
+                Inventory inventory = chest.getInventory();
 
-                // Clear all the items.
-                inventory.clear();
-
-                for (int i = 0; i < inventory.getSize(); i++) {
-                    // 1/5 chance of stopping.
-                    if (ThreadLocalRandom.current().nextInt(5) == 0)
-                        break;
-
-                    ItemStack itemStack = getRandomItem();
-                    inventory.setItem(i, itemStack);
-                }
-            } else {
-                System.out.println("Invalid chest position: " + coordinate.toString());
+                loadInventoryWithItems(inventory);
             }
+            // Otherwise it is an invalid chest location.
+        }
+    }
+
+    private void loadInventoryWithItems(Inventory inventory) {
+        inventory.clear();
+
+        for (int i = 0; i < inventory.getSize(); i++) {
+            // 1/5 chance of stopping.
+            if (i > 3 && ThreadLocalRandom.current().nextInt(4) == 0)
+                break;
+            else if (ThreadLocalRandom.current().nextInt(10) == 0)
+                break;
+
+            ItemStack itemStack = getRandomItem();
+            inventory.addItem(itemStack);
         }
     }
 

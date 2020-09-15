@@ -1,19 +1,20 @@
 package com.aboundedskull.minigames.minigames;
 
+import com.aboundedskull.minigames.data.locatable.Coordinate;
 import com.aboundedskull.minigames.data.locatable.Tile;
 import com.aboundedskull.minigames.data.minigame.MinigameData;
 
 public class TheWalls implements Minigame {
 
-    private final Tile centerTile;
+    private final Coordinate centerTile;
     private boolean started;
 
     public TheWalls() {
-        this.centerTile = new Tile(0,0);
+        this.centerTile = new Coordinate(0,0, 0);
     }
 
     @Override
-    public Tile getCenterTile() {
+    public Coordinate getCenterTile() {
         return centerTile;
     }
 

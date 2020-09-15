@@ -18,6 +18,7 @@ public class MiniGames extends JavaPlugin {
         // MiniGames commands
         MiniGameCommands miniGameCommands = new MiniGameCommands();
         Objects.requireNonNull(getCommand("start")).setExecutor(miniGameCommands);
+        Objects.requireNonNull(getCommand("end")).setExecutor(miniGameCommands);
 
         getServer().getPluginManager().registerEvents(new MiniGamesEvents(), this);
         getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "[Mini Games]: Plugin is enabled.");

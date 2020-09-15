@@ -8,3 +8,7 @@ commands:
     description: Starts minigames
     usage: /<command>
     aliases: start
+  end:
+    description: Stops minigames
+    usage: /<command>
+    aliases: end

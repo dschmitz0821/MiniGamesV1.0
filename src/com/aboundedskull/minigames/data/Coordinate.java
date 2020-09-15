@@ -2,19 +2,24 @@ package com.aboundedskull.minigames.data;
 
 public class Coordinate extends Tile {
 
-    private double z;
+    private int z;
 
-    public Coordinate(double x, double y, double z) {
+    public Coordinate(int x, int y, int z) {
         super(x, y);
         this.z = z;
     }
 
 
-    public double getZ() {
+    public int getZ() {
         return z;
     }
 
-    public void setZ(double z) {
+    public void setZ(int z) {
         this.z = z;
+    }
+
+    @Override
+    public String toString() {
+        return "Coordinate " + "(" + super.getX() + "," + super.getY() + "," + getZ() + ")";
     }
 }

@@ -1,0 +1,10 @@
+name: MiniGames
+version: 1.0
+author: Aboundedskull
+main: com.aboundedskull.minigames.MiniGames
+api-version: 1.16
+commands:
+  start:
+    description: Starts minigames
+    usage: /<command>
+    aliases: start
